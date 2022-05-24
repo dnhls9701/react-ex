@@ -7,16 +7,21 @@ const App: FC = () => {
 
   const inputRef = useRef<InputRef>(null);
 
-  const clickSave = () => {
-    inputRef.current?.setValue('Hello World');
-  }
+  // const clickSave = () => {
+  //   inputRef.current?.setValue('Hello World');
+  // }
 
-  const clickCancel = () => {
-    console.log(inputRef.current?.getValue());
-  }
+  // const clickCancel = () => {
+  //   console.log(inputRef.current?.getValue());
+  // }
 
   const changeInput = (value: string, e: ChangeEvent<HTMLInputElement>| undefined) => {
     console.log({e: e?.target.value});
+  }
+
+  const clickSubmit = () => {
+    console.log(inputRef.current?.getUsernameValue());
+    console.log(inputRef.current?.getPasswordValue());
   }
 
   return(
@@ -34,11 +39,11 @@ const App: FC = () => {
           Learn React
         </a>
     </header>
-    <Button variant="primary" onClick={clickSave}>Save</Button>
-    <Button onClick={clickCancel}>Cancel</Button>
-    <Button variant="success" onClick={() => alert('Exit')}>Exit</Button>
     <div>
       <Input ref = {inputRef} onChange = {changeInput}/>
+      <div>
+        <Button onClick={clickSubmit}>Login</Button>
+      </div>
     </div>
     </div>
   )

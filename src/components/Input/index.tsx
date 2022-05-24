@@ -1,10 +1,13 @@
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle, Fragment } from 'react';
 import { ForwardRefRenderFunction } from 'react';
-import { ChangeEvent, useState, useEffect, useRef} from 'react';
+import { ChangeEvent, useState, useRef} from 'react';
 
 export interface InputRef{
-    setValue(value: string): void;
-    getValue(): string;
+    setUsernameValue(username: string): void;
+    getUsernameValue(): string;
+
+    setPasswordValue(password: string): void;
+    getPasswordValue(): string;
 }
 
 export interface InputProps{
@@ -12,34 +15,47 @@ export interface InputProps{
 }
 
 const Input: ForwardRefRenderFunction<InputRef, InputProps> = (props, ref) => {
-    const { onChange } = props;
-    const [ currentValue, setCurrentValue ] = useState('');
-    const mounted = useRef(false);
+    const [ currentUsernameValue, setUsernameCurrentValue ] = useState('');
+    const [ currentPasswordValue, setPasswordCurrentValue ] = useState('');
     const eventRef = useRef<ChangeEvent<HTMLInputElement>>();
-
-    useEffect(() => {
-        if(mounted.current){
-            console.log({eventRef});
-            onChange && onChange(currentValue, eventRef.current);
-        }
-        mounted.current = true;
-    }, [currentValue]);
     
     useImperativeHandle(ref, () => ({
-        setValue(value) {
-            setCurrentValue(value);
+        setUsernameValue(username) {
+            setUsernameCurrentValue(username);
         },
-        getValue() {
-            return currentValue;
+        getUsernameValue() {
+            return currentUsernameValue;
+        },
+        setPasswordValue(password) {
+            setPasswordCurrentValue(password);
+        },
+        getPasswordValue() {
+            return currentPasswordValue;
         }
     }));
 
-    const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeUsernameInput = (e: ChangeEvent<HTMLInputElement>) => {
         eventRef.current = e;
-        setCurrentValue( e.target.value );
+        setUsernameCurrentValue( e.target.value );
+    }
+
+    const changePasswordInput = (e: ChangeEvent<HTMLInputElement>) => {
+        eventRef.current = e;
+        setPasswordCurrentValue( e.target.value );
     }
         
-    return <input value = {currentValue} onChange={ changeInput }/>
+    return(
+        <Fragment>
+            <span>Username </span>
+            <div>
+                <input type="text" value={currentUsernameValue} onChange={changeUsernameInput}/>
+            </div>
+            <span>Password </span>
+            <div>
+                <input type="password" value={currentPasswordValue} onChange={changePasswordInput}/>
+            </div>
+        </Fragment>
+    )
 }
 
 export default forwardRef(Input);

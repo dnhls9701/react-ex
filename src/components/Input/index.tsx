@@ -9,14 +9,19 @@ export interface InputRef{
 
 export interface InputProps{
     type?: 'text'| 'password';
-    onChange?( value: string, e: ChangeEvent<HTMLInputElement>| undefined): void;
+    value?: string;
+    onChange?( value: string, e?: ChangeEvent<HTMLInputElement>): void;
 }
 
 const Input: ForwardRefRenderFunction<InputRef, InputProps> = (props, ref) => {
-    const { onChange, type = 'password' } = props;
-    const [ currentValue, setCurrentValue ] = useState('');
+    const { onChange, type = 'password', value = '' } = props;
+    const [ currentValue, setCurrentValue ] = useState(value);
     const mounted = useRef(false);
     const eventRef = useRef<ChangeEvent<HTMLInputElement>>();
+
+    useEffect(() => {
+        value === currentValue || setCurrentValue(value);
+    }, [ value ]);
 
     useEffect(() => {
         if(mounted.current){

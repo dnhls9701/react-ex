@@ -30,8 +30,11 @@ const Login: ForwardRefRenderFunction<LoginRef, InputProps> = (props, ref) => {
         }
     }));
 
-    const changeInput = (value: string, e: ChangeEvent<HTMLInputElement>| undefined) => {
-        console.log({e: e?.target.value});
+    const changeUsernameInput = (value: string, e: ChangeEvent<HTMLInputElement>| undefined) => {
+        usernameRef.current?.setValue(value);
+    }
+    const changePasswordInput = (value: string, e: ChangeEvent<HTMLInputElement>| undefined) => {
+        passwordRef.current?.setValue(value);
     }
 
     const clickSubmit = () => {
@@ -43,11 +46,11 @@ const Login: ForwardRefRenderFunction<LoginRef, InputProps> = (props, ref) => {
         <Fragment>
             <span>Username </span>
             <div>
-                <Input type="text" ref={usernameRef} onChange={changeInput}/>
+                <Input type="text" ref={usernameRef} onChange={changeUsernameInput}/>
             </div>
             <span>Password </span>
             <div>
-                <Input  ref={passwordRef} onChange={changeInput}/>
+                <Input  ref={passwordRef} onChange={changePasswordInput}/>
             </div>
             <div>
                 <Button onClick={clickSubmit}>Login</Button>
@@ -56,4 +59,4 @@ const Login: ForwardRefRenderFunction<LoginRef, InputProps> = (props, ref) => {
     )
 }
 
-export default forwardRef(Login);
+export default forwardRef(Login); 

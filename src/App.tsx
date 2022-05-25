@@ -2,10 +2,11 @@ import { ChangeEvent } from 'react';
 import {FC, useRef} from 'react';
 import Button from './components/Button';
 import Input, { InputRef } from './components/Input';
+import Login from './components/Login';
 
 const App: FC = () => {
 
-  const inputRef = useRef<InputRef>(null);
+  //const inputRef = useRef<InputRef>(null);
 
   // const clickSave = () => {
   //   inputRef.current?.setValue('Hello World');
@@ -15,14 +16,14 @@ const App: FC = () => {
   //   console.log(inputRef.current?.getValue());
   // }
 
-  const changeInput = (value: string, e: ChangeEvent<HTMLInputElement>| undefined) => {
-    console.log({e: e?.target.value});
-  }
+  // const changeInput = (value: string, e: ChangeEvent<HTMLInputElement>| undefined) => {
+  //   console.log({e: e?.target.value});
+  // }
 
-  const clickSubmit = () => {
-    console.log(inputRef.current?.getUsernameValue());
-    console.log(inputRef.current?.getPasswordValue());
-  }
+  // const clickSubmit = () => {
+  //   console.log(inputRef.current?.getUsernameValue());
+  //   console.log(inputRef.current?.getPasswordValue());
+  // }
 
   return(
     <div className="App">
@@ -38,13 +39,10 @@ const App: FC = () => {
         >
           Learn React
         </a>
-    </header>
-    <div>
-      <Input ref = {inputRef} onChange = {changeInput}/>
+      </header>
       <div>
-        <Button onClick={clickSubmit}>Login</Button>
+        <Login/>
       </div>
-    </div>
     </div>
   )
 }
